@@ -501,6 +501,39 @@ runnable program, which is run as-is, without modification by CodeRunner,
 once for each test case. The values of the test code and extra fields of each
 test case are ignored.</p>';
 
+
+$string['qtype_julia_program'] = '<p>Used for Julia write-a-program questions, where
+there is no per-test-case code, and the different tests just use different
+standard input (stdin) data. The student answer is expected to be a complete
+runnable program, which is run as-is, without modification by CodeRunner,
+once for each test case. The values of the test code and extra fields of each
+test case are ignored.</p>';
+
+$string['qtype_julia_function'] = '<p>A question type for Julia write-a-function questions.
+The student answer is expected to be a complete Julia function, but it can optionally
+be preceded by other self-contained Julia code such as preprocessor directives and
+support functions.</p>
+<p>In each test case, the test code for such questions typically calls the student function with
+some test arguments and prints the result, such as
+<pre>cout << someIntFunction(blah1, blah2))</pre>
+The test case\'s <i>Expected</i> field is the expected output from the test.
+<p>
+If there is no standard input supplied for any of the test cases, a single
+test program is constructed, consisting of:</p>
+<ol>
+<li>The following standard #includes: iostream, fstream, string, math, vector and algorithm</li>
+<li><code>using namespace std;</code></li>
+<li>The student answer</li>
+<li>A sequence of blocks wrapped in braces for each of the given test cases.
+Each block consists of the test case\'s <i>extra</i> field (usually empty)
+followed by the test code. There is also a <i>printf</i>
+statement added between code blocks to print a special separator that is used
+to split the output back into individual test case outputs.</li>
+</ol>
+<p>However, if any of the test cases has non-empty standard input, multiple test
+programs are run, one for each test case.
+</p>';
+
 $string['qtype_directed_graph'] = '<p>A python3 question type that asks the student to draw
 a directed graph to satisfy some specification. The question author has to write
 Python3 code to check the resulting graph.</p><p>Note that it is not actually
@@ -680,6 +713,7 @@ the student code, these will hold their values across the multiple runs.
 If this is likely to prove a problem, the easiest work-around is to define
 one of the test case standard input fields to be a non-empty value - this
 forces CodeRunner into a fallback mode of running each test case separately.</p>';
+
 
 $string['qtype_undirected_graph'] = '<p>A python3 question type that asks the student to draw
 an undirected graph to satisfy some specification. The question author has to write
